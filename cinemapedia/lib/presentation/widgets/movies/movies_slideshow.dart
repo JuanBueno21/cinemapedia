@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:cinemapedia/domain/entities/movie.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class MoviesSlideShow extends StatelessWidget {
 
-  final List <Movie>  movies;
+  final List <Movie> movies;
 
   const MoviesSlideShow({
     super.key,
@@ -18,7 +19,7 @@ class MoviesSlideShow extends StatelessWidget {
 
 
     return SizedBox(
-      height: 200,
+      height: 210,
       width: double.infinity,
       child: Swiper(
         pagination: SwiperPagination(
@@ -26,7 +27,7 @@ class MoviesSlideShow extends StatelessWidget {
           builder: DotSwiperPaginationBuilder(
             activeColor: colors.primary,
             color: colors.secondary)),
-        viewportFraction: 0.8,
+        viewportFraction: 0.6,
         scale: 0.9,
         autoplay: true,
         itemCount: movies.length,
@@ -66,11 +67,14 @@ class _Slide extends StatelessWidget {
             movie.backdropPath,
             fit: BoxFit.cover,
             loadingBuilder: (context, child, loadingProgress) {
-              // if (loadingProgress != null) {
+              if (loadingProgress != null) {
                 return const DecoratedBox(
-                  decoration: BoxDecoration(color: Colors.black12));
+                  decoration: BoxDecoration(color: Color.fromARGB(31, 185, 5, 5))
+                );
               }
-            // }
+
+              return FadeIn(child: child);
+            }
           )
         )
       ),
