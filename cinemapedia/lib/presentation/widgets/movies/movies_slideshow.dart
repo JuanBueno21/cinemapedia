@@ -27,7 +27,7 @@ class MoviesSlideShow extends StatelessWidget {
           builder: DotSwiperPaginationBuilder(
             activeColor: colors.primary,
             color: colors.secondary)),
-        viewportFraction: 0.6,
+        viewportFraction: 0.8,
         scale: 0.9,
         autoplay: true,
         itemCount: movies.length,
@@ -69,7 +69,7 @@ class _Slide extends StatelessWidget {
             loadingBuilder: (context, child, loadingProgress) {
               if (loadingProgress != null) {
                 return const DecoratedBox(
-                  decoration: BoxDecoration(color: Color.fromARGB(31, 185, 5, 5))
+                  decoration: BoxDecoration(color: Colors.black)
                 );
               }
 
