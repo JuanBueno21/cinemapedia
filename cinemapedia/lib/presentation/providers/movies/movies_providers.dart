@@ -5,13 +5,36 @@ import 'package:cinemapedia/presentation/providers/movies/movies_repository_prov
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final nowPlayinMoviesProvider = StateNotifierProvider <MoviesNotifier, List<Movie>> ((ref) {
-
   final fetchMoreMovies = ref.watch( movieRepositoryProvider).getNawPlaying;
-
   return MoviesNotifier(
     fetchMoreMovies: fetchMoreMovies
   );
 });
+
+
+final popularMoviesProvider = StateNotifierProvider <MoviesNotifier, List<Movie>> ((ref) {
+  final fetchMoreMovies = ref.watch( movieRepositoryProvider).getPopular;
+  return MoviesNotifier(
+    fetchMoreMovies: fetchMoreMovies
+  );
+});
+
+
+final upComingMoviesProvider = StateNotifierProvider <MoviesNotifier, List<Movie>> ((ref) {
+  final fetchMoreMovies = ref.watch( movieRepositoryProvider).getUpcoming;
+  return MoviesNotifier(
+    fetchMoreMovies: fetchMoreMovies
+  );
+});
+
+
+final toRatedMoviesProvider = StateNotifierProvider <MoviesNotifier, List<Movie>> ((ref) {
+  final fetchMoreMovies = ref.watch( movieRepositoryProvider).getTorated;
+  return MoviesNotifier(
+    fetchMoreMovies: fetchMoreMovies
+  );
+});
+
 
 
 typedef MovieCallBack = Future<List<Movie>> Function({int page});

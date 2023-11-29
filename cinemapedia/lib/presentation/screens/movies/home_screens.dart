@@ -30,6 +30,9 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     super.initState();
     
     ref.read(nowPlayinMoviesProvider.notifier).loadNextPage();
+    ref.read(popularMoviesProvider.notifier).loadNextPage();
+    ref.read(upComingMoviesProvider.notifier).loadNextPage();
+    ref.read(toRatedMoviesProvider.notifier).loadNextPage();
 
   }
   @override
@@ -37,7 +40,10 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
     final nowPlayingMovies = ref.watch(nowPlayinMoviesProvider);
     final slideShowMovies = ref.watch(moviesSlideshowProvider);
-    // if (nowPlayingMovies.length == 0) return CircularProgressIndicator();
+    final popularMovies = ref.watch(popularMoviesProvider);
+    final upComingMovies = ref.watch(upComingMoviesProvider);
+    final toRatedMovies = ref.watch(toRatedMoviesProvider);
+    
 
     return CustomScrollView(
       slivers: [
@@ -62,35 +68,32 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                 loadNextPage: () => {ref.read(nowPlayinMoviesProvider.notifier).loadNextPage()
                 }),
                 
-                MovieHorizontalListview(movies: nowPlayingMovies,
-                title: "Proximamente",
+                MovieHorizontalListview(movies: upComingMovies,
+                title: "UpComing",
                 subTitle: "2024",
-                loadNextPage: () => {ref.read(nowPlayinMoviesProvider.notifier).loadNextPage()
+                loadNextPage: () => {ref.read(upComingMoviesProvider.notifier).loadNextPage()
                 }),
                 
-                MovieHorizontalListview(movies: nowPlayingMovies,
+                MovieHorizontalListview(movies: popularMovies,
                 title: "Populares",
                 subTitle: "Ahora",
-                loadNextPage: () => {ref.read(nowPlayinMoviesProvider.notifier).loadNextPage()
+                loadNextPage: () => {ref.read(popularMoviesProvider.notifier).loadNextPage()
                 }),
                 
-                MovieHorizontalListview(movies: nowPlayingMovies,
-                title: "Mejor Calificados",
+                MovieHorizontalListview(movies: toRatedMovies,
+                title: "Top-Rated",
                 subTitle: "Ranking",
-                loadNextPage: () => {ref.read(nowPlayinMoviesProvider.notifier).loadNextPage()
+                loadNextPage: () => {ref.read(toRatedMoviesProvider.notifier).loadNextPage()
                 }),
 
                 const SizedBox(height: 10)
           
-                ],
-              );
-
-            },
-
-              childCount: 1
-
-          )
-        )
+              ],);
+        },
+        
+        childCount: 1
+          
+        ))
       ]
     );
   }
