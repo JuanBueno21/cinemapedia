@@ -43,6 +43,8 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     final popularMovies = ref.watch(popularMoviesProvider);
     final upComingMovies = ref.watch(upComingMoviesProvider);
     final toRatedMovies = ref.watch(toRatedMoviesProvider);
+
+    return const FullScreenLoader();
     
 
     return CustomScrollView(
@@ -90,7 +92,7 @@ class _HomeViewState extends ConsumerState<_HomeView> {
           
               ],);
         },
-        
+
         childCount: 1
           
         ))
