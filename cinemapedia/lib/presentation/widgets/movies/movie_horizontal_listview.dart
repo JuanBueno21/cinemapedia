@@ -68,7 +68,7 @@ class _MovieHorizontalListviewState extends State<MovieHorizontalListview> {
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
-                return _Slidee(/*movie:*/ widget.movies[index]) ;
+                return FadeInRight(child: _Slidee(widget.movies[index]));
               
               }
             )
@@ -80,13 +80,11 @@ class _MovieHorizontalListviewState extends State<MovieHorizontalListview> {
 }
 
 class _Slidee extends StatelessWidget {
-  
   final Movie movie;
   const _Slidee(this.movie);
 
   @override
   Widget build(BuildContext context) {
-
     final textStyle =  Theme.of(context).textTheme;
 
     return Container(
