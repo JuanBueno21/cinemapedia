@@ -1,8 +1,15 @@
-# cinemapedia
+# CINEMAPEDIA
 
-A new Flutter project.
+Flutter project.
 
-# Dev
 
-1. copiar el .env.template y renombrarlo a .env
-2. cambiar las variables de entorno (The MovieDB)
+Peliculas producidas actuales, en cines, proximamente, populares y topRated
+
+Peticiones HTTP / Fuente: https://www.themoviedb.org/
+
+![Cinemapedia](https://github.com/JuanBueno21/cinemapedia/blob/main/cinemapedia/demo/cinemapedia1.gif)
+
+
+
+![Cinemapedia](https://github.com/JuanBueno21/cinemapedia/blob/main/cinemapedia/demo/cinemapedia2.gif)
+
