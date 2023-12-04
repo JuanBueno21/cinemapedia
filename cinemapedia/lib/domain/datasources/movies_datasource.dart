@@ -11,5 +11,7 @@ abstract class MoviesDataSource {
   
   Future <List<Movie>> getTorated ({ int page = 1 });
 
+  Future <Movie> getMovieById (String id);
+
 
 }
