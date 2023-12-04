@@ -3,6 +3,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:cinemapedia/config/helpers/human_formats.dart';
 import 'package:cinemapedia/domain/entities/movie.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MovieHorizontalListview extends StatefulWidget {
 
@@ -31,10 +32,9 @@ class _MovieHorizontalListviewState extends State<MovieHorizontalListview> {
     super.initState();
 
     scrollController.addListener(() { 
+
       if(widget.loadNextPage == null) return;
-
       if((scrollController.position.pixels + 200) >= scrollController.position.maxScrollExtent) {
-
         widget.loadNextPage!();
       }
 
@@ -46,8 +46,6 @@ class _MovieHorizontalListviewState extends State<MovieHorizontalListview> {
     scrollController.dispose();
     super.dispose();
   }
-
-
 
 
   @override
@@ -95,13 +93,13 @@ class _Slidee extends StatelessWidget {
 
           //*imagen
           SizedBox(
-            width: 150,
+            width: 149,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image.network(
                 movie.posterPath,
                 fit: BoxFit.cover,
-                width: 150,
+                width: 149,
                 loadingBuilder: (context, child, loadingProgress) {
                   
                   if(loadingProgress != null) {
@@ -111,7 +109,10 @@ class _Slidee extends StatelessWidget {
                     );
                   }
 
-                  return FadeIn(child: child);
+                  return GestureDetector(
+                    onTap: () => context.push("/movie/${ movie.id}"),
+                    child: FadeIn(child: child),
+                  );
 
                 },
               ),
@@ -122,7 +123,7 @@ class _Slidee extends StatelessWidget {
           
 
           //*title
-          SizedBox(width: 150,
+          SizedBox(width: 149,
           child: Text(
             movie.title,
             maxLines: 2,
