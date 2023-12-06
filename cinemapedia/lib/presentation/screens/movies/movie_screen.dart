@@ -77,9 +77,9 @@ class _CustomSliverAppBar extends StatelessWidget {
         //* Ttitulo de la pelicula
         /*title: Text(
           movie.title,
-          style: const TextStyle(fontSize: 15),
+          style: const TextStyle(fontSize: 20),
           textAlign: TextAlign.start,
-        ),*/
+        ), */
 
         background: Stack(
           children: [
@@ -125,7 +125,7 @@ class _MovieDetails extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final size = MediaQuery.of(context).size;
-    final textStyle = Theme.of(context).textTheme;
+    // final textStyle = Theme.of(context).textTheme;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,12 +155,11 @@ class _MovieDetails extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(movie.title, style: textStyle.titleLarge),
+                    Text(movie.title, style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
                     Text(movie.overview),
                   ]
                 ),
               )
-
             ],
           ),
         ),
@@ -173,14 +172,14 @@ class _MovieDetails extends StatelessWidget {
             ...movie.genreIds.map((gender) => Container(
               margin: const EdgeInsets.only(right: 10),
               child: Chip(label: Text(gender),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              ),
             ))
           ]),
-          
         ),
 
 
-        
+        // TODO: MOSTRAR ACTORES PELICULA
 
         const SizedBox(height: 100,)
 
@@ -188,3 +187,4 @@ class _MovieDetails extends StatelessWidget {
     );
   }
 }
+
