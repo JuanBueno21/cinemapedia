@@ -33,7 +33,7 @@ class Cast {
     final double popularity;
     final String? profilePath;
     final int? castId;
-    final String? character;
+    final String character;
     final String creditId;
     final int? order;
     final String? department;
@@ -49,7 +49,7 @@ class Cast {
         required this.popularity,
         required this.profilePath,
         this.castId,
-        this.character,
+        required this.character,
         required this.creditId,
         this.order,
         this.department,
