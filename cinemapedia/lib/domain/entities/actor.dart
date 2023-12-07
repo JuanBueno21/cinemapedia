@@ -5,7 +5,7 @@ class Actor {
   final int id;
   final String name;
   final String profilePath;
-  final String character;
+  final String? character;
 
   Actor({
     required this.id, 
