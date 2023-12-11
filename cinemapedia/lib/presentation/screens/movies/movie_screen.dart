@@ -1,6 +1,5 @@
-import 'dart:ffi';
-import 'dart:math';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:cinemapedia/domain/entities/movie.dart';
 import 'package:cinemapedia/presentation/providers/movies/actors/actors_by_movie_provider.dart';
 import 'package:cinemapedia/presentation/providers/movies/movie_info_provider.dart';
@@ -91,6 +90,10 @@ class _CustomSliverAppBar extends StatelessWidget {
             SizedBox.expand(
               child: Image.network(movie.posterPath,
               fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) {
+                if(loadingProgress != null) return const SizedBox();
+                return FadeIn(child: child);
+              },
               ),
             ),
 
@@ -122,7 +125,7 @@ class _CustomSliverAppBar extends StatelessWidget {
 }
 
 
-
+//* DETALLES DE LA PELICULA
 class _MovieDetails extends StatelessWidget {
 
   final Movie movie;
@@ -186,7 +189,7 @@ class _MovieDetails extends StatelessWidget {
         ),
 
 
-        _ActorByeMovie(movieId: movie.id.toString()),
+        _ActorByMovie(movieId: movie.id.toString()),
         const SizedBox(height: 20,)
 
       ],
@@ -195,12 +198,12 @@ class _MovieDetails extends StatelessWidget {
 }
 
 
-
-class _ActorByeMovie extends ConsumerWidget {
+//* ACTORES
+class _ActorByMovie extends ConsumerWidget {
 
   final String movieId;
 
-  const _ActorByeMovie({required this.movieId});
+  const _ActorByMovie({required this.movieId});
 
   @override
   Widget build(BuildContext context, ref) {
@@ -228,14 +231,16 @@ class _ActorByeMovie extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
 
-                //* ACTOR PHOTO
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.network(
-                    actor.profilePath,
-                    height: 180,
-                    width: 115,
-                    fit: BoxFit.cover,
+                //* FOTO DEL ACTOR
+                FadeInRight(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.network(
+                      actor.profilePath,
+                      height: 180,
+                      width: 115,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
 
