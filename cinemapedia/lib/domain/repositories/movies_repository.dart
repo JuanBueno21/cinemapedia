@@ -15,6 +15,9 @@ abstract class MoviesRepository {
 // * Upcoming
   Future <List<Movie>> getTorated({ int page = 1 });
 
-    Future <Movie> getMovieById (String id);
+  Future <Movie> getMovieById (String id);
+
+    Future <List<Movie>> searchMovies (String query);
+
 
 }

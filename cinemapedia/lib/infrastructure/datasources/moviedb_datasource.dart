@@ -56,6 +56,7 @@ class Moviedbdatasource extends MoviesDataSource {
   // upcoming
   @override
   Future<List<Movie>> getUpcoming({int page = 1}) async {
+
     final response = await dio.get("/movie/upcoming",
     queryParameters: {
       "page": page
@@ -82,5 +83,15 @@ class Moviedbdatasource extends MoviesDataSource {
 
     return movie;
     }
-  }
+    
+      @override
+      Future<List<Movie>> searchMovies(String query) async {
+
+        final response = await dio.get("/search/movie",
+          queryParameters: {
+            "query": query
+    });
+    return _jsonToMovies(response.data);
   
+      }
+  }
