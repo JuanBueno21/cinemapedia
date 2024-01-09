@@ -11,14 +11,18 @@ typedef SearchMoviesCallBack = Future<List<Movie>> Function (String query);
 class SearchMovieDelegate extends SearchDelegate<Movie?> {
 
   final SearchMoviesCallBack searchMovies;
-  final List<Movie> initialMovies;
+  List<Movie> initialMovies;
+
   StreamController<List<Movie>> debouncedMovies = StreamController.broadcast();
   Timer? _debounceTimer ;
 
   SearchMovieDelegate({
     required this.searchMovies,
     required this.initialMovies,
-    });
+    }):super(
+      searchFieldLabel: "Buscar peliculas",
+      // textInputAction: TextInputAction.done
+    );
 
   void clearStreams() {
     debouncedMovies.close();
@@ -35,14 +39,39 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
       }
 
       final movies = await searchMovies(query);
+      initialMovies = movies;
       debouncedMovies.add(movies);
+      
 
      });
   }
 
+  Widget buildResoultsAndSuggestions() {
+    return StreamBuilder(
+      initialData: initialMovies,
+      stream: debouncedMovies.stream,
+      builder: (context, snapshot) {
 
-  @override
-  String get searchFieldLabel => "buscar peliculas";
+
+        final movies = snapshot.data ?? [];
+
+        return ListView.builder(
+          itemCount: movies.length,
+          itemBuilder: (context, index) => _MovieItem(
+            movie: movies[index],
+            onMovieSelected: (context, movie){
+              clearStreams();
+              close(context, movie);
+            } ,
+          )
+        );
+      }
+    );
+
+  }
+
+  // @override
+  // String get searchFieldLabel => "buscar peliculas";
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -65,12 +94,14 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
         clearStreams();
         close(context, null);
         }, 
-        icon: const Icon(Icons.arrow_back));
+        icon: const Icon(Icons.arrow_back)
+    );
   }
 
   @override
   Widget buildResults(BuildContext context) {
-        return const Text("buildResults");
+    return buildResoultsAndSuggestions();
+    
   }
 
   @override
@@ -78,26 +109,7 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
 
     _onQueryChanged(query);
 
-    return StreamBuilder(
-      // future: searchMovies(query),
-      initialData: initialMovies,
-      stream: debouncedMovies.stream,
-      builder: (context, snapshot) {
-
-        final movies = snapshot.data ?? [];
-
-        return ListView.builder(
-          itemCount: movies.length,
-          itemBuilder: (context, index) => _MovieItem(
-            movie: movies[index],
-            onMovieSelected: (context, movie){
-              clearStreams();
-              close(context, movie);
-            } ,
-          )
-        );
-      }
-    );
+    return buildResoultsAndSuggestions();
   }
 }
 
