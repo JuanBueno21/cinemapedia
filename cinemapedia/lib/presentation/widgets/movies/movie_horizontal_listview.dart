@@ -57,7 +57,7 @@ class _MovieHorizontalListviewState extends State<MovieHorizontalListview> {
 
           if(widget.title != null || widget.subTitle != null)
 
-          _Title(tittle: widget.title, subtitle: widget.subTitle),
+          _Title(title: widget.title, subTitle: widget.subTitle),
 
           Expanded(
             child: ListView.builder(
@@ -66,7 +66,7 @@ class _MovieHorizontalListviewState extends State<MovieHorizontalListview> {
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
-                return FadeInRight(child: _Slidee(widget.movies[index]));
+                return FadeInRight(child: _Slide(movie: widget.movies[index]));
               
               }
             )
@@ -77,9 +77,9 @@ class _MovieHorizontalListviewState extends State<MovieHorizontalListview> {
   }
 }
 
-class _Slidee extends StatelessWidget {
+class _Slide extends StatelessWidget {
   final Movie movie;
-  const _Slidee(this.movie);
+  const _Slide({required this.movie});
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +110,7 @@ class _Slidee extends StatelessWidget {
                   }
 
                   return GestureDetector(
-                    onTap: () => context.push("/movie/${ movie.id}"),
+                    onTap: () => context.push("/home/0/movie/${ movie.id}"),
                     child: FadeIn(child: child),
                   );
 
@@ -139,8 +139,7 @@ class _Slidee extends StatelessWidget {
                 Icon(Icons.star_half_outlined, color: Colors.yellow.shade800),
                 const SizedBox(width: 4),
                 Text("${ movie.voteAverage }", style: textStyle.bodyMedium?.copyWith(color: Colors.yellow.shade800)),
-                const SizedBox(width: 10),
-                // const Spacer(),
+                const Spacer(),
                 Text(HumanFormats.number(movie.popularity), style: textStyle.bodySmall),
           
               ],
@@ -153,12 +152,12 @@ class _Slidee extends StatelessWidget {
 
 class _Title extends StatelessWidget {
 
-  final String? tittle;
-  final String? subtitle;
+  final String? title;
+  final String? subTitle;
 
   const _Title({
-    this.tittle, 
-    this.subtitle});
+    this.title, 
+    this.subTitle});
 
   @override
   Widget build(BuildContext context) {
@@ -171,18 +170,18 @@ class _Title extends StatelessWidget {
       child: Row(
         children: [
 
-          if(tittle != null)
-            Text(tittle!, style: titleStyle,),
+          if(title != null)
+            Text(title!, style: titleStyle,),
 
           const Spacer(),
 
-          if(tittle != null)
+          if(subTitle != null)
             FilledButton.tonal(
               // icon: Icon(Icons.date_range_outlined),
               // label: Text("hola"),
               style: const ButtonStyle(visualDensity: VisualDensity.compact),
               onPressed: (){},
-              child: Text(subtitle!)
+              child: Text(subTitle!)
               ),
               
         ]),
