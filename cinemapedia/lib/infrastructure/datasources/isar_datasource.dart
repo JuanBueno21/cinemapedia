@@ -3,6 +3,7 @@
 import 'package:cinemapedia/domain/datasources/local_storage_datasource.dart';
 import 'package:cinemapedia/domain/entities/movie.dart';
 import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
 
 class IsarDatasource extends LocalStorageDatasource {
 
@@ -13,29 +14,56 @@ class IsarDatasource extends LocalStorageDatasource {
   }
 
   Future<Isar> opendDB() async {
-    if(Isar.instanceNames.isEmpty) {
-      return await Isar.open([MovieSchema], inspector: true, directory: '');
-    }
 
+    final dir = await getApplicationCacheDirectory();
+
+    if(Isar.instanceNames.isEmpty) {
+      return await Isar.open([MovieSchema], inspector: true, directory: dir.path);
+    }
     return Future.value(Isar.getInstance());
   }
 
   @override
-  Future<bool> isMovieFavorite(int movieId) {
-    // TODO: implement isFavorite
-    throw UnimplementedError();
+  Future<bool> isMovieFavorite(int movieId) async {
+    final isar = await db;
+
+    final Movie? isFavotiteMovie = await isar.movies
+    .filter()
+    .idEqualTo(movieId)
+    .findFirst();
+
+    return isFavotiteMovie != null;
   }
 
   @override
-  Future<void> toggleFavorite(Movie movie) {
-    // TODO: implement toggleFavorite
-    throw UnimplementedError();
+  Future<void> toggleFavorite(Movie movie) async {
+    final isar = await db;
+
+    final favoriteMovie = await isar.movies
+    .filter()
+    .idEqualTo(movie.id)
+    .findFirst();
+
+    if (favoriteMovie != null) {
+      //borrar
+      isar.writeTxnSync(() => isar.movies.deleteSync(favoriteMovie.isarId!));
+      return;
+    }
+
+    // insertar
+    isar.writeTxnSync(() => isar.movies.putSync(movie));
+
   }
 
     @override
-  Future<List<Movie>> loadMovies({int limit = 10, offset = 0}) {
-    // TODO: implement loadMovie
-    throw UnimplementedError();
+  Future<List<Movie>> loadMovies({int limit = 10, offset = 0}) async {
+    final isar = await db;
+
+    return isar.movies.where()
+    .offset(offset)
+    .limit(limit)
+    .findAll();
+
   }
 
 }
