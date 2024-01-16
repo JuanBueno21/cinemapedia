@@ -13,3 +13,5 @@ Peticiones HTTP / Fuente: https://www.themoviedb.org/
 
 ![Cinemapedia](https://github.com/JuanBueno21/cinemapedia/blob/main/cinemapedia/demo/cinemapedia2.gif)
 
+cambios en la entidad, hay que ejecutar el comando
+flutter pub run build_runner build
