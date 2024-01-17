@@ -1,6 +1,7 @@
 
 import 'package:animate_do/animate_do.dart';
 import 'package:cinemapedia/domain/entities/movie.dart';
+// import 'package:cinemapedia/domain/repositories/local_storage_repository.dart';
 import 'package:cinemapedia/presentation/providers/actors/actors_by_movie_provider.dart';
 import 'package:cinemapedia/presentation/providers/movies/movie_info_provider.dart';
 import 'package:cinemapedia/presentation/providers/storage/local_storage_provider.dart';
@@ -199,6 +200,13 @@ class _ActorByMovie extends ConsumerWidget {
 }
 
 
+final isFavoriteProvider = FutureProvider.family.autoDispose((ref, int movieId) {
+  final localStorageRepository = ref.watch(localStorageRepositoryProvider);
+  return localStorageRepository.isMovieFavorite(movieId);
+} );
+
+
+
 class _CustomSliverAppBar extends ConsumerWidget {
   
   final Movie movie;
@@ -209,6 +217,7 @@ class _CustomSliverAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
 
+    final isFavoriteFuture = ref.watch(isFavoriteProvider(movie.id));
     final size = MediaQuery.of(context).size;
 
     return SliverAppBar(
@@ -220,13 +229,21 @@ class _CustomSliverAppBar extends ConsumerWidget {
           
           ref.watch(localStorageRepositoryProvider).toggleFavorite(movie);
 
+          ref.invalidate(isFavoriteProvider(movie.id));
+
         }, 
         
-        icon: const Icon(Icons.favorite_border),
-        // icon: const Icon(Icons.favorite_rounded, color: Colors.red),
-        
+        icon: isFavoriteFuture.when(
+          loading: () => const CircularProgressIndicator(strokeWidth: 2,),
+          data: (isFavorite) => isFavorite 
+            ? const Icon(Icons.favorite_rounded, color: Colors.red)
+            : const Icon(Icons.favorite_border),
+          error: (_, __) => throw UnimplementedError(),
+        ),
         )
       ],
+
+
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         
