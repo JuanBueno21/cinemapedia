@@ -11,7 +11,6 @@ final favoriteMoviesProvider = StateNotifierProvider<StorageMoviesNotifier, Map<
   
 });
 
-
 class StorageMoviesNotifier extends StateNotifier<Map<int, Movie>> {
   
   int page = 0;
@@ -22,8 +21,7 @@ class StorageMoviesNotifier extends StateNotifier<Map<int, Movie>> {
     :super({});
 
 
-  Future<void> loadNextPage() async {
-
+  Future<List<Movie>> loadNextPage() async {
     final movies = await localStorageRepository.loadMovies(offset: page * 10);
     page++ ;
 
@@ -34,5 +32,6 @@ class StorageMoviesNotifier extends StateNotifier<Map<int, Movie>> {
 
     state = {...state, ...tempMoviesMap};
 
+    return movies;
   }
 }

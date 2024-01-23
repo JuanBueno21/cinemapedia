@@ -16,13 +16,15 @@ class CustomBottomNavigation extends StatelessWidget {
     switch( index ) {
       case 0:
         context.go('/home/0');
-      break;
+        break;
+        
       case 1:
         context.go('/home/1');
-      break;
+        break;
+
       case 2:
         context.go('/home/2');
-      break;
+        break;
     }
   }
 
@@ -31,6 +33,7 @@ class CustomBottomNavigation extends StatelessWidget {
 
     return BottomNavigationBar(
       elevation: 0,
+      currentIndex: currentIndex,
       onTap: (value) => onItemTapped(context, value),
       items: const [
         BottomNavigationBarItem(
