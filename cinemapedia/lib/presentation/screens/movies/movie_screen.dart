@@ -233,7 +233,7 @@ class _CustomSliverAppBar extends ConsumerWidget {
 
           ref.invalidate(isFavoriteProvider(movie.id));
 
-        }, 
+        },
         
         icon: isFavoriteFuture.when(
           loading: () => const CircularProgressIndicator(strokeWidth: 2,),
