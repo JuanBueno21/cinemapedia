@@ -27,7 +27,7 @@ class CustomAppbar extends ConsumerWidget {
       
               const Spacer(),
       
-              IconButton(onPressed: ()  {
+              IconButton(onPressed: () {
 
                 final searchedMovies = ref.read(searchedMoviesProvider);
                 final searchQuery = ref.read(searchQueryProvider);
@@ -46,15 +46,14 @@ class CustomAppbar extends ConsumerWidget {
 
                   context.push("/home/0/movie/${ movie.id }");
 
-                } );
-                
+                });  
               },
               icon: const Icon(Icons.search)
               )
               ],
             ),
           ),
-          )
-        );
-      }
+        )
+      );
     }
+  }
